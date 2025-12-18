@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: spring-gateway-api-key
+
+  data:
+    redis:
+      url: redis://localhost:6379
+
+  cloud:
+    gateway.server.webflux:
+      routes:
+        # Customers service
+        - id: customers-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/customers/**
+          filters:
+            # Remove /customers prefix and add /api
+            - name: RewritePath
+              args:
+                regexp: /customers/(?<remaining>.*)
+                replacement: /customer-service/${remaining}
+
+        # Payments service
+        - id: payments-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/payments/**
+          filters:
+            - name: RewritePath
+              args:
+                regexp: /payments/(?<remaining>.*)
+                replacement: /payment-service/${remaining}
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.netty.http.client: DEBUG
+    reactor.netty.http.server: DEBUG
+    reactor.netty: DEBUG

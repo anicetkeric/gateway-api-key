@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping(path = "/payment")
+@RequestMapping(path = "/payment-service/checkout")
 public class ConsumerBController {
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<String> payment(){
         return new ResponseEntity<>("payment api", HttpStatus.OK);
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<Payment> save(@RequestBody Payment payment){
         return new ResponseEntity<>(payment, HttpStatus.CREATED);
     }

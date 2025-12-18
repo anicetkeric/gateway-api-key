@@ -1,5 +1,6 @@
 package com.bootteam.springcloudgateway.domain;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.List;
@@ -11,7 +12,9 @@ import java.util.List;
 @EqualsAndHashCode
 public class ApiKey {
 
+    @NotNull
     private String key;
 
-    private List<String> services;
+    private List<AppService> services;
+
 }
